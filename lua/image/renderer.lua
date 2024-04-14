@@ -313,7 +313,8 @@ local render = function(image)
 
   -- modification_date
   local magick_image = magick.load_image(image.path)
-  image.date_hash = magick_image:get_property("date:modify"):gsub("[-:+]", "")
+  local date_modify = magick_image:get_property("date:modify")
+  image.date_hash = date_modify and date_modify:gsub("[-:+]", "") or ""
   if image.date_hash ~= initial_date_hash then
     image:clear()
     needs_resize = true
